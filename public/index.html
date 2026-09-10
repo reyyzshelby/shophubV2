@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ShopHub — Belanja Kebutuhan Sehari-hari</title>
+<meta name="description" content="ShopHub, sistem informasi e-commerce dengan backend Node.js + Express: cari produk, kelola keranjang, checkout, dan pantau riwayat pesanan.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<a class="skip-link" href="#main">Langsung ke isi utama</a>
+
+<header class="navbar">
+  <a class="logo" href="#home"><span class="logo-mark">SH</span>ShopHub</a>
+  <nav aria-label="Navigasi utama">
+    <a href="#products">Produk</a>
+    <a href="#how">Cara kerja</a>
+    <a href="#orders">Pesanan</a>
+  </nav>
+  <div class="nav-actions">
+    <button id="themeBtn" class="icon-btn" aria-label="Ganti mode gelap/terang" aria-pressed="false">
+      <svg class="i-moon" viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 14.5A8.5 8.5 0 1 1 9.5 4a7 7 0 0 0 10.5 10.5Z"/></svg>
+    </button>
+    <button id="wishBtn" class="icon-btn" onclick="scrollToId('products')" aria-label="Lihat produk favorit">
+      <svg viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20s-7-4.4-9.5-9C.8 7.4 2.7 4 6 4c2 0 3.4 1 4 2.3C10.6 5 12 4 14 4c3.3 0 5.2 3.4 3.5 7-2.5 4.6-9.5 9-9.5 9Z"/></svg>
+      <span id="wishCount" class="count-pill">0</span>
+    </button>
+    <button class="cart-btn" onclick="scrollToId('cart')" aria-label="Lihat keranjang belanja">
+      <svg viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 4h2l2.2 11.4a2 2 0 0 0 2 1.6h7.6a2 2 0 0 0 2-1.6L20.5 8H6"/><circle cx="9.5" cy="20" r="1.4" fill="currentColor" stroke="none"/><circle cx="17" cy="20" r="1.4" fill="currentColor" stroke="none"/></svg>
+      <span id="cartCount" class="count-pill">0</span>
+    </button>
+  </div>
+</header>
+
+<main id="main">
+<section id="home" class="hero">
+  <div class="hero-copy">
+    <p class="eyebrow">Sistem informasi e-commerce · Node.js + Express</p>
+    <h1>Belanja beres, <span class="hl">stoknya beneran</span> dijaga server.</h1>
+    <p class="lede">ShopHub sekarang punya backend sungguhan: katalog dan riwayat pesanan tersimpan di server lewat REST API, bukan cuma di browser kamu. Cari produk, isi keranjang, checkout — semua tercatat.</p>
+    <div class="hero-actions">
+      <a href="#products" class="btn primary">Lihat semua produk</a>
+      <a href="#how" class="btn ghost">Lihat cara kerjanya</a>
+    </div>
+    <dl class="hero-stats">
+      <div><dt>8</dt><dd>kategori produk siap jelajah</dd></div>
+      <div><dt>4</dt><dd>langkah dari cari sampai bayar</dd></div>
+      <div><dt>API</dt><dd>stok &amp; pesanan hidup di server</dd></div>
+    </dl>
+  </div>
+  <div class="hero-panel" aria-label="Contoh produk favorit hari ini">
+    <p class="panel-label">Lagi dicari orang</p>
+    <div id="heroPicks" class="hero-picks">
+      <div class="skel-row"></div><div class="skel-row"></div><div class="skel-row"></div>
+    </div>
+  </div>
+</section>
+
+<nav class="categories" aria-label="Filter kategori">
+  <button class="cat active" data-cat="Semua">Semua produk</button>
+  <button class="cat" data-cat="Elektronik">Elektronik</button>
+  <button class="cat" data-cat="Fashion">Fashion</button>
+  <button class="cat" data-cat="Aksesoris">Aksesoris</button>
+  <button class="cat" data-cat="Rumah">Rumah</button>
+</nav>
+
+<section id="products" class="section">
+  <div class="section-head">
+    <div>
+      <p class="eyebrow">Katalog</p>
+      <h2>Pilih produk yang kamu butuhkan</h2>
+    </div>
+    <div class="filters">
+      <label class="sr-only" for="search">Cari produk</label>
+      <input id="search" type="search" placeholder="Cari produk, mis. headphone">
+      <label class="sr-only" for="sort">Urutkan produk</label>
+      <select id="sort">
+        <option value="default">Urutkan: relevansi</option>
+        <option value="low">Harga terendah</option>
+        <option value="high">Harga tertinggi</option>
+      </select>
+    </div>
+  </div>
+  <div id="productGrid" class="product-grid"><div class="loading">Memuat produk dari server…</div></div>
+</section>
+
+<section id="how" class="section how-it-works">
+  <p class="eyebrow">Cara kerja sistem</p>
+  <h2>Empat langkah, dari lihat produk sampai pesanan tercatat</h2>
+  <ol class="steps">
+    <li><span class="step-no">01</span><h3>Cari &amp; pilih</h3><p>Telusuri katalog dari server, saring per kategori, lalu buka detail produk yang cocok.</p></li>
+    <li><span class="step-no">02</span><h3>Masukkan keranjang</h3><p>Atur jumlah pesanan. Sistem menghitung subtotal dan ongkir secara langsung.</p></li>
+    <li><span class="step-no">03</span><h3>Checkout</h3><p>Isi data penerima. Server memvalidasi stok sebelum pesanan disimpan.</p></li>
+    <li><span class="step-no">04</span><h3>Terpantau</h3><p>Pesanan tersimpan di file database server dan muncul di riwayat transaksi.</p></li>
+  </ol>
+</section>
+
+<section id="cart" class="cart-section section">
+  <div class="section-head"><div><p class="eyebrow">Keranjang</p><h2>Barang yang mau kamu beli</h2></div></div>
+  <div class="cart-layout">
+    <div id="cartItems" class="cart-items"></div>
+    <aside class="summary">
+      <h3>Ringkasan belanja</h3>
+      <div class="summary-row"><span>Subtotal</span><b id="subtotal">Rp 0</b></div>
+      <div class="summary-row"><span>Ongkos kirim</span><b id="shipping">Rp 0</b></div>
+      <hr>
+      <div class="summary-row total"><span>Total</span><b id="total">Rp 0</b></div>
+      <button class="btn primary full" onclick="openCheckout()">Checkout</button>
+      <p class="summary-note">Ongkir flat berlaku setelah keranjang berisi produk.</p>
+    </aside>
+  </div>
+</section>
+
+<section id="orders" class="section orders">
+  <p class="eyebrow">Transaksi</p>
+  <h2>Riwayat pesanan tersimpan di server</h2>
+  <div id="orderList"><div class="loading">Memuat riwayat pesanan…</div></div>
+</section>
+</main>
+
+<footer>
+  <p>© 2026 ShopHub — Prototype sistem informasi dengan backend Node.js + Express, dibuat untuk tugas mata kuliah Sistem Informasi.</p>
+</footer>
+
+<div id="productModal" class="modal" role="dialog" aria-modal="true" aria-labelledby="detailTitle">
+  <div class="modal-box product-detail">
+    <button class="close" onclick="closeModal('productModal')" aria-label="Tutup detail produk">×</button>
+    <div id="detailContent"></div>
+  </div>
+</div>
+
+<div id="checkoutModal" class="modal" role="dialog" aria-modal="true" aria-labelledby="checkoutTitle">
+  <div class="modal-box">
+    <button class="close" onclick="closeModal('checkoutModal')" aria-label="Tutup checkout">×</button>
+    <h2 id="checkoutTitle">Selesaikan pesanan</h2>
+    <p class="muted">Pesanan dikirim ke server dan disimpan sungguhan di file database — tidak ada pembayaran nyata yang diproses.</p>
+    <form id="checkoutForm" novalidate>
+      <label>Nama penerima
+        <input id="buyerName" required placeholder="Nama lengkap">
+        <span class="field-error" data-for="buyerName"></span>
+      </label>
+      <label>Alamat pengiriman
+        <textarea id="address" required placeholder="Jalan, kota, kode pos"></textarea>
+        <span class="field-error" data-for="address"></span>
+      </label>
+      <label>Metode pembayaran
+        <select id="payment">
+          <option>Transfer bank (simulasi)</option>
+          <option>Bayar di tempat / COD (simulasi)</option>
+          <option>E-wallet (simulasi)</option>
+        </select>
+      </label>
+      <button class="btn primary full" type="submit" id="payBtn">Bayar sekarang</button>
+    </form>
+  </div>
+</div>
+
+<div id="toast" class="toast" role="status" aria-live="polite"></div>
+<script src="script.js"></script>
+</body>
+</html>

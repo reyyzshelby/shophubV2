@@ -1,0 +1,86 @@
+{
+  "products": [
+    {
+      "id": 1,
+      "name": "Headphone Bluetooth",
+      "cat": "Elektronik",
+      "price": 289000,
+      "icon": "🎧",
+      "stock": 12,
+      "desc": "Headphone wireless nyaman untuk belajar dan hiburan seharian.",
+      "best": true
+    },
+    {
+      "id": 2,
+      "name": "Smartwatch Active",
+      "cat": "Aksesoris",
+      "price": 459000,
+      "icon": "⌚",
+      "stock": 8,
+      "desc": "Jam pintar dengan pelacak aktivitas dan notifikasi harian.",
+      "best": false
+    },
+    {
+      "id": 3,
+      "name": "Sneakers Urban",
+      "cat": "Fashion",
+      "price": 379000,
+      "icon": "👟",
+      "stock": 15,
+      "desc": "Sneakers kasual yang nyaman untuk kegiatan sehari-hari.",
+      "best": true
+    },
+    {
+      "id": 4,
+      "name": "Lampu Meja LED",
+      "cat": "Rumah",
+      "price": 129000,
+      "icon": "💡",
+      "stock": 20,
+      "desc": "Lampu meja hemat energi dengan desain minimalis.",
+      "best": false
+    },
+    {
+      "id": 5,
+      "name": "Keyboard Mechanical",
+      "cat": "Elektronik",
+      "price": 525000,
+      "icon": "⌨️",
+      "stock": 7,
+      "desc": "Keyboard mechanical yang responsif untuk mengetik dan gaming.",
+      "best": false
+    },
+    {
+      "id": 6,
+      "name": "Tas Backpack",
+      "cat": "Fashion",
+      "price": 249000,
+      "icon": "🎒",
+      "stock": 11,
+      "desc": "Tas multifungsi untuk kuliah dan aktivitas luar ruangan.",
+      "best": false
+    },
+    {
+      "id": 7,
+      "name": "Earbuds Wireless",
+      "cat": "Elektronik",
+      "price": 199000,
+      "icon": "🎶",
+      "stock": 18,
+      "desc": "Earbuds ringkas dengan koneksi wireless yang stabil.",
+      "best": true
+    },
+    {
+      "id": 8,
+      "name": "Kacamata Casual",
+      "cat": "Aksesoris",
+      "price": 159000,
+      "icon": "🕶️",
+      "stock": 9,
+      "desc": "Kacamata casual untuk penggunaan sehari-hari.",
+      "best": false
+    }
+  ],
+  "orders": [],
+  "nextOrderSeq": 1
+}

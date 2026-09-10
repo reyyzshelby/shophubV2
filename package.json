@@ -1,0 +1,16 @@
+{
+  "name": "shophub-backend",
+  "version": "3.0.0",
+  "description": "ShopHub - prototype sistem informasi e-commerce dengan backend Node.js + Express dan database file JSON.",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "license": "ISC",
+  "dependencies": {
+    "express": "^5.2.1"
+  },
+  "engines": {
+    "node": "24.x"
+  }
+}
