@@ -8,7 +8,8 @@
       "icon": "🎧",
       "stock": 12,
       "desc": "Headphone wireless nyaman untuk belajar dan hiburan seharian.",
-      "best": true
+      "best": true,
+      "image": "/assets/products/1.svg"
     },
     {
       "id": 2,
@@ -18,7 +19,8 @@
       "icon": "⌚",
       "stock": 8,
       "desc": "Jam pintar dengan pelacak aktivitas dan notifikasi harian.",
-      "best": false
+      "best": false,
+      "image": "/assets/products/2.svg"
     },
     {
       "id": 3,
@@ -28,7 +30,8 @@
       "icon": "👟",
       "stock": 15,
       "desc": "Sneakers kasual yang nyaman untuk kegiatan sehari-hari.",
-      "best": true
+      "best": true,
+      "image": "/assets/products/3.svg"
     },
     {
       "id": 4,
@@ -38,7 +41,8 @@
       "icon": "💡",
       "stock": 20,
       "desc": "Lampu meja hemat energi dengan desain minimalis.",
-      "best": false
+      "best": false,
+      "image": "/assets/products/4.svg"
     },
     {
       "id": 5,
@@ -48,7 +52,8 @@
       "icon": "⌨️",
       "stock": 7,
       "desc": "Keyboard mechanical yang responsif untuk mengetik dan gaming.",
-      "best": false
+      "best": false,
+      "image": "/assets/products/5.svg"
     },
     {
       "id": 6,
@@ -58,7 +63,8 @@
       "icon": "🎒",
       "stock": 11,
       "desc": "Tas multifungsi untuk kuliah dan aktivitas luar ruangan.",
-      "best": false
+      "best": false,
+      "image": "/assets/products/6.svg"
     },
     {
       "id": 7,
@@ -68,7 +74,8 @@
       "icon": "🎶",
       "stock": 18,
       "desc": "Earbuds ringkas dengan koneksi wireless yang stabil.",
-      "best": true
+      "best": true,
+      "image": "/assets/products/7.svg"
     },
     {
       "id": 8,
@@ -78,7 +85,8 @@
       "icon": "🕶️",
       "stock": 9,
       "desc": "Kacamata casual untuk penggunaan sehari-hari.",
-      "best": false
+      "best": false,
+      "image": "/assets/products/8.svg"
     }
   ],
   "orders": [],

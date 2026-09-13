@@ -3,56 +3,67 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ShopHub — Belanja Kebutuhan Sehari-hari</title>
+<title>ShopHub — Belanja dengan stok yang beneran real</title>
 <meta name="description" content="ShopHub, sistem informasi e-commerce dengan backend Node.js + Express: cari produk, kelola keranjang, checkout, dan pantau riwayat pesanan.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
 <a class="skip-link" href="#main">Langsung ke isi utama</a>
 
 <header class="navbar">
-  <a class="logo" href="#home"><span class="logo-mark">SH</span>ShopHub</a>
+  <a class="logo" href="#home">
+    <span class="logo-mark">SH</span>
+    <span>ShopHub</span>
+  </a>
   <nav aria-label="Navigasi utama">
     <a href="#products">Produk</a>
     <a href="#how">Cara kerja</a>
     <a href="#orders">Pesanan</a>
   </nav>
   <div class="nav-actions">
-    <button id="themeBtn" class="icon-btn" aria-label="Ganti mode gelap/terang" aria-pressed="false">
-      <svg class="i-moon" viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 14.5A8.5 8.5 0 1 1 9.5 4a7 7 0 0 0 10.5 10.5Z"/></svg>
+    <button id="themeBtn" class="icon-btn" aria-label="Ganti tampilan terang/gelap" aria-pressed="false">
+      <svg class="i-sun" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
+      <svg class="i-moon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 14.5A8.5 8.5 0 1 1 9.5 4a7 7 0 0 0 10.5 10.5Z"/></svg>
     </button>
     <button id="wishBtn" class="icon-btn" onclick="scrollToId('products')" aria-label="Lihat produk favorit">
-      <svg viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20s-7-4.4-9.5-9C.8 7.4 2.7 4 6 4c2 0 3.4 1 4 2.3C10.6 5 12 4 14 4c3.3 0 5.2 3.4 3.5 7-2.5 4.6-9.5 9-9.5 9Z"/></svg>
+      <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20s-7-4.4-9.5-9C.8 7.4 2.7 4 6 4c2 0 3.4 1 4 2.3C10.6 5 12 4 14 4c3.3 0 5.2 3.4 3.5 7-2.5 4.6-9.5 9-9.5 9Z"/></svg>
       <span id="wishCount" class="count-pill">0</span>
     </button>
     <button class="cart-btn" onclick="scrollToId('cart')" aria-label="Lihat keranjang belanja">
-      <svg viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 4h2l2.2 11.4a2 2 0 0 0 2 1.6h7.6a2 2 0 0 0 2-1.6L20.5 8H6"/><circle cx="9.5" cy="20" r="1.4" fill="currentColor" stroke="none"/><circle cx="17" cy="20" r="1.4" fill="currentColor" stroke="none"/></svg>
+      <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 4h2l2.2 11.4a2 2 0 0 0 2 1.6h7.6a2 2 0 0 0 2-1.6L20.5 8H6"/><circle cx="9.5" cy="20" r="1.4" fill="currentColor" stroke="none"/><circle cx="17" cy="20" r="1.4" fill="currentColor" stroke="none"/></svg>
+      <span>Keranjang</span>
       <span id="cartCount" class="count-pill">0</span>
     </button>
   </div>
 </header>
 
 <main id="main">
+
 <section id="home" class="hero">
+  <div class="hero-glow hero-glow-a" aria-hidden="true"></div>
+  <div class="hero-glow hero-glow-b" aria-hidden="true"></div>
   <div class="hero-copy">
-    <p class="eyebrow">Sistem informasi e-commerce · Node.js + Express</p>
-    <h1>Belanja beres, <span class="hl">stoknya beneran</span> dijaga server.</h1>
-    <p class="lede">ShopHub sekarang punya backend sungguhan: katalog dan riwayat pesanan tersimpan di server lewat REST API, bukan cuma di browser kamu. Cari produk, isi keranjang, checkout — semua tercatat.</p>
+    <p class="kicker"><span class="dot"></span>Sistem informasi e-commerce · Node.js + Express</p>
+    <h1>Belanja yang jujur soal stok, gesit soal checkout.</h1>
+    <p class="lede">Katalog dan riwayat pesanan ShopHub tersimpan sungguhan di server lewat REST API — bukan cuma di penyimpanan browser kamu. Cari produk, isi keranjang, checkout, dan semuanya tercatat rapi.</p>
     <div class="hero-actions">
-      <a href="#products" class="btn primary">Lihat semua produk</a>
-      <a href="#how" class="btn ghost">Lihat cara kerjanya</a>
+      <a href="#products" class="btn primary">Jelajahi katalog</a>
+      <a href="#how" class="btn ghost">Lihat alur belanja</a>
     </div>
     <dl class="hero-stats">
       <div><dt>8</dt><dd>kategori produk siap jelajah</dd></div>
       <div><dt>4</dt><dd>langkah dari cari sampai bayar</dd></div>
-      <div><dt>API</dt><dd>stok &amp; pesanan hidup di server</dd></div>
+      <div><dt>Live</dt><dd>stok &amp; pesanan hidup di server</dd></div>
     </dl>
   </div>
-  <div class="hero-panel" aria-label="Contoh produk favorit hari ini">
-    <p class="panel-label">Lagi dicari orang</p>
+  <div class="hero-panel" aria-label="Produk yang lagi dicari orang">
+    <div class="panel-head">
+      <span class="panel-label">Lagi dicari orang</span>
+      <span class="panel-tag">Terlaris</span>
+    </div>
     <div id="heroPicks" class="hero-picks">
       <div class="skel-row"></div><div class="skel-row"></div><div class="skel-row"></div>
     </div>
@@ -70,12 +81,15 @@
 <section id="products" class="section">
   <div class="section-head">
     <div>
-      <p class="eyebrow">Katalog</p>
+      <p class="kicker"><span class="dot"></span>Katalog</p>
       <h2>Pilih produk yang kamu butuhkan</h2>
     </div>
     <div class="filters">
-      <label class="sr-only" for="search">Cari produk</label>
-      <input id="search" type="search" placeholder="Cari produk, mis. headphone">
+      <div class="search-wrap">
+        <svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
+        <label class="sr-only" for="search">Cari produk</label>
+        <input id="search" type="search" placeholder="Cari produk, mis. headphone">
+      </div>
       <label class="sr-only" for="sort">Urutkan produk</label>
       <select id="sort">
         <option value="default">Urutkan: relevansi</option>
@@ -88,18 +102,38 @@
 </section>
 
 <section id="how" class="section how-it-works">
-  <p class="eyebrow">Cara kerja sistem</p>
+  <p class="kicker"><span class="dot"></span>Cara kerja sistem</p>
   <h2>Empat langkah, dari lihat produk sampai pesanan tercatat</h2>
   <ol class="steps">
-    <li><span class="step-no">01</span><h3>Cari &amp; pilih</h3><p>Telusuri katalog dari server, saring per kategori, lalu buka detail produk yang cocok.</p></li>
-    <li><span class="step-no">02</span><h3>Masukkan keranjang</h3><p>Atur jumlah pesanan. Sistem menghitung subtotal dan ongkir secara langsung.</p></li>
-    <li><span class="step-no">03</span><h3>Checkout</h3><p>Isi data penerima. Server memvalidasi stok sebelum pesanan disimpan.</p></li>
-    <li><span class="step-no">04</span><h3>Terpantau</h3><p>Pesanan tersimpan di file database server dan muncul di riwayat transaksi.</p></li>
+    <li>
+      <span class="step-no">01</span>
+      <span class="step-icon"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg></span>
+      <h3>Cari &amp; pilih</h3>
+      <p>Telusuri katalog dari server, saring per kategori, lalu buka detail produk yang cocok.</p>
+    </li>
+    <li>
+      <span class="step-no">02</span>
+      <span class="step-icon"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 4h2l2.2 11.4a2 2 0 0 0 2 1.6h7.6a2 2 0 0 0 2-1.6L20.5 8H6"/></svg></span>
+      <h3>Masukkan keranjang</h3>
+      <p>Atur jumlah pesanan. Sistem menghitung subtotal dan ongkir secara langsung.</p>
+    </li>
+    <li>
+      <span class="step-no">03</span>
+      <span class="step-icon"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20"/></svg></span>
+      <h3>Checkout</h3>
+      <p>Isi data penerima. Server memvalidasi stok sebelum pesanan disimpan.</p>
+    </li>
+    <li>
+      <span class="step-no">04</span>
+      <span class="step-icon"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span>
+      <h3>Terpantau</h3>
+      <p>Pesanan tersimpan di file database server dan muncul di riwayat transaksi.</p>
+    </li>
   </ol>
 </section>
 
 <section id="cart" class="cart-section section">
-  <div class="section-head"><div><p class="eyebrow">Keranjang</p><h2>Barang yang mau kamu beli</h2></div></div>
+  <div class="section-head"><div><p class="kicker"><span class="dot"></span>Keranjang</p><h2>Barang yang mau kamu beli</h2></div></div>
   <div class="cart-layout">
     <div id="cartItems" class="cart-items"></div>
     <aside class="summary">
@@ -115,26 +149,41 @@
 </section>
 
 <section id="orders" class="section orders">
-  <p class="eyebrow">Transaksi</p>
+  <p class="kicker"><span class="dot"></span>Transaksi</p>
   <h2>Riwayat pesanan tersimpan di server</h2>
   <div id="orderList"><div class="loading">Memuat riwayat pesanan…</div></div>
 </section>
+
 </main>
 
 <footer>
-  <p>© 2026 ShopHub — Prototype sistem informasi dengan backend Node.js + Express, dibuat untuk tugas mata kuliah Sistem Informasi.</p>
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <span class="logo-mark">SH</span>
+      <div>
+        <strong>ShopHub</strong>
+        <p>Prototype sistem informasi e-commerce dengan backend Node.js + Express.</p>
+      </div>
+    </div>
+    <p class="footer-copy">© 2026 ShopHub — dibuat untuk tugas mata kuliah Sistem Informasi.</p>
+  </div>
 </footer>
 
 <div id="productModal" class="modal" role="dialog" aria-modal="true" aria-labelledby="detailTitle">
   <div class="modal-box product-detail">
-    <button class="close" onclick="closeModal('productModal')" aria-label="Tutup detail produk">×</button>
+    <button class="close" onclick="closeModal('productModal')" aria-label="Tutup detail produk">
+      <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M18 6 6 18M6 6l12 12"/></svg>
+    </button>
     <div id="detailContent"></div>
   </div>
 </div>
 
 <div id="checkoutModal" class="modal" role="dialog" aria-modal="true" aria-labelledby="checkoutTitle">
   <div class="modal-box">
-    <button class="close" onclick="closeModal('checkoutModal')" aria-label="Tutup checkout">×</button>
+    <button class="close" onclick="closeModal('checkoutModal')" aria-label="Tutup checkout">
+      <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M18 6 6 18M6 6l12 12"/></svg>
+    </button>
+    <p class="kicker"><span class="dot"></span>Checkout</p>
     <h2 id="checkoutTitle">Selesaikan pesanan</h2>
     <p class="muted">Pesanan dikirim ke server dan disimpan sungguhan di file database — tidak ada pembayaran nyata yang diproses.</p>
     <form id="checkoutForm" novalidate>

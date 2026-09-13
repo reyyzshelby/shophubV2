@@ -1,10 +1,38 @@
 // Cart & wishlist tetap disimpan per-browser (localStorage) karena belum
-// ada sistem login. Produk & riwayat pesanan sekarang datang dari backend
-// lewat fetch() ke REST API Express — itu yang beda dari versi sebelumnya.
+// ada sistem login. Produk & riwayat pesanan datang dari backend lewat
+// fetch() ke REST API Express — kontrak API-nya tidak diubah sama sekali,
+// yang berubah cuma tampilan.
 let products = [];
 let cart = JSON.parse(localStorage.getItem("shopHubCart")) || [];
 let wishlist = JSON.parse(localStorage.getItem("shopHubWishlist")) || [];
 let activeCat = "Semua";
+
+// Foto produk nyata (Unsplash) menggantikan emoji `icon` dari database.
+// Dipetakan per-id, dengan fallback per-kategori kalau ada produk baru
+// yang belum terdaftar di sini — jadi data/db.json tidak perlu diubah.
+const PRODUCT_PHOTOS = {
+  1: "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?q=80&w=800&auto=format&fit=crop", // Headphone Bluetooth
+  2: "https://images.unsplash.com/photo-1523275335684-37898b6baf30?q=80&w=800&auto=format&fit=crop", // Smartwatch Active
+  3: "https://images.unsplash.com/photo-1542291026-7eec264c27ff?q=80&w=800&auto=format&fit=crop", // Sneakers Urban
+  4: "https://images.unsplash.com/photo-1507473885765-e6ed057f782c?q=80&w=800&auto=format&fit=crop", // Lampu Meja LED
+  5: "https://images.unsplash.com/photo-1587829741301-dc798b83add3?q=80&w=800&auto=format&fit=crop", // Keyboard Mechanical
+  6: "https://images.unsplash.com/photo-1553062407-98eeb64c6a62?q=80&w=800&auto=format&fit=crop", // Tas Backpack
+  7: "https://images.unsplash.com/photo-1590658268037-6bf12165a8df?q=80&w=800&auto=format&fit=crop", // Earbuds Wireless
+  8: "https://images.unsplash.com/photo-1572635196237-14b3f281503f?q=80&w=800&auto=format&fit=crop", // Kacamata Casual
+};
+const CATEGORY_FALLBACK_PHOTOS = {
+  Elektronik: "https://images.unsplash.com/photo-1518770660439-4636190af475?q=80&w=800&auto=format&fit=crop",
+  Fashion: "https://images.unsplash.com/photo-1523275335684-37898b6baf30?q=80&w=800&auto=format&fit=crop",
+  Aksesoris: "https://images.unsplash.com/photo-1523275335684-37898b6baf30?q=80&w=800&auto=format&fit=crop",
+  Rumah: "https://images.unsplash.com/photo-1507473885765-e6ed057f782c?q=80&w=800&auto=format&fit=crop",
+};
+function photoFor(product) {
+  return (
+    PRODUCT_PHOTOS[product.id] ||
+    CATEGORY_FALLBACK_PHOTOS[product.cat] ||
+    "https://images.unsplash.com/photo-1523275335684-37898b6baf30?q=80&w=800&auto=format&fit=crop"
+  );
+}
 
 const money = (n) => "Rp " + n.toLocaleString("id-ID");
 const qtyInCart = (id) => {
@@ -49,7 +77,7 @@ function renderHeroPicks() {
     .map(
       (p) => `
    <div class="pick">
-     <div class="pick-icon">${p.icon}</div>
+     <img class="pick-thumb" src="${photoFor(p)}" alt="${p.name}" loading="lazy">
      <div><div class="pick-name">${p.name}</div><div class="pick-cat">${p.cat}</div></div>
      <div class="pick-price">${money(p.price)}</div>
    </div>`
@@ -77,6 +105,7 @@ function renderProducts() {
           return `
  <article class="product" data-cat="${p.cat}">
   <div class="product-img">
+    <img src="${photoFor(p)}" alt="${p.name}" loading="lazy">
     ${p.best ? '<span class="badge-best">Terlaris</span>' : ""}
     <button class="wish-toggle${isWished ? " active" : ""}" aria-label="${
             isWished ? "Hapus dari favorit" : "Tambah ke favorit"
@@ -85,7 +114,6 @@ function renderProducts() {
         isWished ? "currentColor" : "none"
       }" stroke="currentColor" stroke-width="2"><path d="M12 20s-7-4.4-9.5-9C.8 7.4 2.7 4 6 4c2 0 3.4 1 4 2.3C10.6 5 12 4 14 4c3.3 0 5.2 3.4 3.5 7-2.5 4.6-9.5 9-9.5 9Z"/></svg>
     </button>
-    ${p.icon}
   </div>
   <div class="product-body">
    <span class="product-tag">${p.cat}</span><h3>${p.name}</h3><p>${p.desc}</p>
@@ -141,7 +169,7 @@ function renderCart() {
         const p = products.find((x) => x.id === item.id);
         if (!p) return "";
         const atMax = item.qty >= p.stock;
-        return `<div class="cart-row"><div class="cart-icon">${p.icon}</div><div><h4>${p.name}</h4><small>${money(
+        return `<div class="cart-row"><img class="cart-thumb" src="${photoFor(p)}" alt="${p.name}" loading="lazy"><div><h4>${p.name}</h4><small>${money(
           p.price
         )} / produk</small>
   <div class="qty">
@@ -193,7 +221,7 @@ function scrollToId(id) {
 
 function showDetail(id) {
   const p = products.find((x) => x.id === id);
-  document.getElementById("detailContent").innerHTML = `<div class="detail-icon">${p.icon}</div><div class="detail-info">
+  document.getElementById("detailContent").innerHTML = `<div class="detail-media"><img src="${photoFor(p)}" alt="${p.name}"></div><div class="detail-info">
  <span class="product-tag">${p.cat}</span><h2 id="detailTitle">${p.name}</h2><p class="muted">${p.desc}</p><div class="price">${money(
     p.price
   )}</div>
@@ -239,7 +267,7 @@ document.getElementById("checkoutForm").addEventListener("submit", async (e) => 
 
   try {
     // Server yang memutuskan valid/tidaknya stok & menyimpan order —
-    // bukan cuma dicek di browser seperti versi sebelumnya.
+    // bukan cuma dicek di browser.
     const { order } = await api("/orders", {
       method: "POST",
       body: JSON.stringify({
@@ -301,10 +329,13 @@ document.querySelectorAll(".cat").forEach((btn) =>
 );
 document.getElementById("search").addEventListener("input", renderProducts);
 document.getElementById("sort").addEventListener("change", renderProducts);
+
+// Tema default sekarang GELAP (identitas visual baru). Tombol tema
+// beralih ke mode terang sebagai alternatif aksesibilitas, bukan sebaliknya.
 document.getElementById("themeBtn").addEventListener("click", () => {
-  const dark = document.body.classList.toggle("dark");
-  document.getElementById("themeBtn").setAttribute("aria-pressed", dark ? "true" : "false");
-  localStorage.setItem("shopHubTheme", dark ? "dark" : "light");
+  const light = document.body.classList.toggle("light");
+  document.getElementById("themeBtn").setAttribute("aria-pressed", light ? "true" : "false");
+  localStorage.setItem("shopHubTheme", light ? "light" : "dark");
 });
 document.querySelectorAll(".modal").forEach((m) =>
   m.addEventListener("click", (e) => {
@@ -315,8 +346,8 @@ document.addEventListener("keydown", (e) => {
   if (e.key === "Escape") document.querySelectorAll(".modal.show").forEach((m) => m.classList.remove("show"));
 });
 
-if (localStorage.getItem("shopHubTheme") === "dark") {
-  document.body.classList.add("dark");
+if (localStorage.getItem("shopHubTheme") === "light") {
+  document.body.classList.add("light");
   document.getElementById("themeBtn").setAttribute("aria-pressed", "true");
 }
 
